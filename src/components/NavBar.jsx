@@ -3,7 +3,7 @@ import styles from "@/components/NavBar.module.css";
 import Link from "next/link";
 export default function NavBar({ current_user }) {
   return (
-    <div className="NavBar">
+    <div className={styles.NavBar}>
       <Link className="Link" href={"/"}>
         Home
       </Link>

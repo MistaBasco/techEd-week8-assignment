@@ -1,13 +1,14 @@
-import { Link } from "react-router-dom";
-import "/src/components/Title.css";
+import Link from "next/link";
+import styles1 from "@/components/Title.module.css";
+import styles2 from "@/app/page.module.css";
 
 export default function Title() {
   return (
     <>
-      <div className="Title glow">
-        <Link className="Link" to={"/"}>
+      <div className={`${styles1.Title} ${styles2.glow}`}>
+        <Link className="Link" href={"/"}>
           <h1>
-            Absolute Weeb Reviews<span className="copyright">©</span>
+            Absolute Weeb Reviews<span className={styles2.copyright}>©</span>
           </h1>
         </Link>
       </div>
