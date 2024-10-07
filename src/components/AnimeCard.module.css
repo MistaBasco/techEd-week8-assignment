@@ -1,0 +1,50 @@
+.AnimeCard {
+  min-width: 12svw;
+  background-color: rgb(79, 113, 119);
+  border-radius: 8px;
+  padding-bottom: 1svh;
+  /* scroll-snap-align: left; */
+  /* TODO: fix shadow overflow BS */
+  /* box-shadow: 2px 4px 3px rgb(113, 56, 35); */
+  /* margin-top: -1svh; */
+}
+
+.AnimeCard .AnimeCover {
+  height: 30svh;
+}
+.AnimeCard h1 {
+  font-size: 1.3em;
+  border-radius: 8px 8px 0px 0px;
+}
+.AnimeCard .Link {
+  color: beige;
+}
+.AnimeCard .Link:visited {
+  color: beige;
+}
+
+.AnimeCard .spacer {
+  margin-bottom: 0.5svh;
+}
+
+.TagWrapper {
+  width: 100%;
+  display: flex;
+  /* For some reason justify-content isn't doing what it's supposed to do so we're gonna use gap instead */
+  /* justify-content: space-between;  */
+  gap: 0.5svw;
+}
+.TagWrapper ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3svw;
+}
+.TagWrapper li {
+  list-style-type: none;
+  background-color: rgb(125, 125, 125);
+}
+
+.TagWrapper li:hover {
+  background-color: rgb(98, 98, 98);
+  cursor: pointer;
+}

@@ -14,12 +14,14 @@ const exo = Exo_2({
   display: "swap",
 });
 
+const current_user = 1;
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={exo.className}>
       <body>
         <Title />
-        <Header />
+        <Header current_user={current_user} />
         {children}
         <Footer />
       </body>

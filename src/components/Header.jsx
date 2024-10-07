@@ -1,3 +1,4 @@
+"use client";
 import LoginForm from "./LoginForm";
 import NavBar from "./NavBar";
 import styles from "@/components/Header.module.css";

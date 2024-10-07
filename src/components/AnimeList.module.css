@@ -1,0 +1,9 @@
+.AnimeList {
+  display: flex;
+  gap: 1%;
+  padding-left: 0.5svw;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  padding-bottom: 4svh;
+}

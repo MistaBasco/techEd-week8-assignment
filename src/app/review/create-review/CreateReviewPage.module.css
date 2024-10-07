@@ -1,0 +1,7 @@
+.CreateReviewPage {
+  gap: 3svh;
+  background-color: rgb(68, 88, 74);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
