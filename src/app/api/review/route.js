@@ -34,10 +34,10 @@ export async function POST(req) {
     const rating = parseInt(formData.get("rating"), 10); // Parse rating as an integer
     const review_text = formData.get("review_text");
     const current_user = formData.get("current_user");
-    console.log("anime_id:", anime_id);
-    console.log("rating:", rating);
-    console.log("review_text:", review_text);
-    console.log("current_user:", current_user);
+    // console.log("anime_id:", anime_id);
+    // console.log("rating:", rating);
+    // console.log("review_text:", review_text);
+    // console.log("current_user:", current_user);
 
     // Ensure all fields are provided
     if (!anime_id || isNaN(rating) || !review_text || !current_user) {

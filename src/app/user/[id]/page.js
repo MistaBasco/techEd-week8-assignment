@@ -19,6 +19,7 @@ export default async function UserDetailsPage({ params }) {
     const data = await response.json();
 
     const { user, reviews } = data;
+    // console.log(data);
 
     return (
       <div className={`${styles2.page} ${styles1.UserDetailsPage}`}>

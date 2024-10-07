@@ -5,7 +5,7 @@ export default function DeleteButton({ reviewId, current_user, onDelete }) {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/reviews/${reviewId}`, {
+      const response = await fetch(`/api/review/${reviewId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ current_user }),

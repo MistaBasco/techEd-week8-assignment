@@ -9,12 +9,12 @@ export default async function AnimeDetailPage({ params }) {
   dotenv.config();
   try {
     // Fetch the anime details from your API route
-    console.log("Fetching anime details from API:", `/api/anime/${id}`);
+    // console.log("Fetching anime details from API:", `/api/anime/${id}`);
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const response = await fetch(`${baseUrl}/api/anime/${id}`);
 
-    console.log("Response status:", response.status);
+    // console.log("Response status:", response.status);
 
     if (!response.ok) {
       console.error("Failed to fetch anime details:", response.statusText);

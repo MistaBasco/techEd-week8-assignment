@@ -11,7 +11,7 @@ export default function LikeButton({ reviewId, current_user, onLike, liked }) {
 
     setLoading(true); // Disable button while waiting for response
     try {
-      const response = await fetch(`/api/reviews/${reviewId}/like`, {
+      const response = await fetch(`/api/review/${reviewId}/like`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ current_user }),
@@ -21,7 +21,7 @@ export default function LikeButton({ reviewId, current_user, onLike, liked }) {
       if (response.ok) {
         const result = await response.json();
         onLike(); // Update the parent component's state
-        console.log(result.success);
+        // console.log(result.success);
       } else {
         const data = await response.json();
         console.error(data.error);

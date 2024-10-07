@@ -32,18 +32,21 @@ export async function GET(req, { params }) {
       JOIN anime ON reviews.anime_id = anime.anime_id
       JOIN appusers ON reviews.user_id = appusers.user_id
       WHERE reviews.user_id = $1
-      ORDER BY reviews.created_at DESC
+      ORDER BY reviews.created_at DESC;
     `,
       [id]
     );
 
     const reviews = reviewsResult.rows;
+    console.log("Fetched reviews from DB:", reviews);
 
     // Return the user details and their reviews as a JSON response
     const response = {
       user,
       reviews,
     };
+
+    console.log("API Response being sent:", response);
 
     return new Response(JSON.stringify(response), { status: 200 });
   } catch (error) {
