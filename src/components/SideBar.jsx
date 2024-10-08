@@ -1,10 +1,10 @@
 import ReviewList from "@/components/ReviewList";
 import styles from "@/components/SideBar.module.css";
 
-export default function SideBar({ current_user }) {
+export default function SideBar() {
   return (
     <div className={styles.SideBar}>
-      <ReviewList current_user={current_user} />
+      <ReviewList />
     </div>
   );
 }

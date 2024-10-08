@@ -15,15 +15,13 @@ const exo = Exo_2({
   display: "swap",
 });
 
-const current_user = 1;
-
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en" className={exo.className}>
         <body>
           <Title />
-          <Header current_user={current_user} />
+          <Header />
           {children}
           <Footer />
         </body>

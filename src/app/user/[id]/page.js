@@ -1,11 +1,17 @@
 import ReviewCard from "@/components/ReviewCard";
 import styles1 from "@/app/user/[id]/UserDetailsPage.module.css";
 import styles2 from "@/app/page.module.css";
+import { auth } from "@clerk/nextjs/server";
+import { getUserIdByClerkId } from "@/utilities/getUserByClerkId";
 
 export default async function UserDetailsPage({ params }) {
   const { id } = params;
-  const current_user = 1;
+
   try {
+    const { userId: clerkId } = auth();
+
+    const current_user = await getUserIdByClerkId(clerkId);
+
     // Fetch the user details and reviews from the API route
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${id}`
