@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
-export default function LikeButton({ reviewId, current_user, onLike, liked }) {
+export default function LikeButton({ reviewId, onLike, liked }) {
   const [loading, setLoading] = useState(false);
+  const { user } = useUser();
 
   const handleLike = async () => {
-    if (!current_user) {
+    if (!user) {
       alert("You need to log in to like this review!");
       return;
     }
@@ -14,7 +16,6 @@ export default function LikeButton({ reviewId, current_user, onLike, liked }) {
       const response = await fetch(`/api/review/${reviewId}/like`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ current_user }),
         credentials: "include",
       });
 

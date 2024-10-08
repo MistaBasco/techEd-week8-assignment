@@ -1,4 +1,5 @@
 import { Exo_2 } from "next/font/google";
+import { ClerkProvider, RedirectToSignIn } from "@clerk/nextjs";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -18,13 +19,15 @@ const current_user = 1;
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={exo.className}>
-      <body>
-        <Title />
-        <Header current_user={current_user} />
-        {children}
-        <Footer />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className={exo.className}>
+        <body>
+          <Title />
+          <Header current_user={current_user} />
+          {children}
+          <Footer />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

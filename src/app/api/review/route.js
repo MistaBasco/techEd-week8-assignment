@@ -1,4 +1,6 @@
 import connect from "@/utilities/connect";
+import { auth } from "@clerk/nextjs/server";
+import { getUserIdByClerkId } from "@/utilities/getUserByClerkId";
 
 export async function GET() {
   const db = connect();
@@ -23,6 +25,23 @@ export async function POST(req) {
   const db = connect();
 
   try {
+    const { userId: clerkId } = auth();
+    if (!clerkId) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Unauthorized" }),
+        { status: 401 }
+      );
+    }
+
+    // Convert Clerk ID to local user ID
+    const userId = await getUserIdByClerkId(clerkId);
+    if (!userId) {
+      return new Response(
+        JSON.stringify({ success: false, error: "User not found" }),
+        { status: 404 }
+      );
+    }
+
     const formData = await req.formData();
 
     console.log("Received form data:");
@@ -33,14 +52,9 @@ export async function POST(req) {
     const anime_id = formData.get("anime_id");
     const rating = parseInt(formData.get("rating"), 10); // Parse rating as an integer
     const review_text = formData.get("review_text");
-    const current_user = formData.get("current_user");
-    // console.log("anime_id:", anime_id);
-    // console.log("rating:", rating);
-    // console.log("review_text:", review_text);
-    // console.log("current_user:", current_user);
 
     // Ensure all fields are provided
-    if (!anime_id || isNaN(rating) || !review_text || !current_user) {
+    if (!anime_id || isNaN(rating) || !review_text) {
       return new Response(
         JSON.stringify({ success: false, error: "All fields are required" }),
         { status: 400 }
@@ -51,7 +65,7 @@ export async function POST(req) {
     const result = await db.query(
       `INSERT INTO reviews (anime_id, user_id, rating, review_text)
        VALUES ($1, $2, $3, $4) RETURNING *`,
-      [anime_id, current_user, rating, review_text]
+      [anime_id, userId, rating, review_text]
     );
 
     if (result.rowCount === 1) {

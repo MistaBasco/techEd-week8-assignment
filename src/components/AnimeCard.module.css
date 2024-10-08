@@ -11,6 +11,14 @@
 
 .AnimeCard .AnimeCover {
   height: 30svh;
+  background-color: cadetblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.AnimeCard .AnimeCover h1 {
+  rotate: 45deg;
 }
 .AnimeCard h1 {
   font-size: 1.3em;

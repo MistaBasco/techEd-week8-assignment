@@ -2,12 +2,17 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "@/components/ReviewList.module.css";
 import ReviewCard from "@/components/ReviewCard";
+import { useUser } from "@clerk/nextjs";
+import { getUserIdByClerkId } from "@/utilities/getUserByClerkId";
 
-export default function ReviewList({ current_user }) {
+export default function ReviewList() {
   const [reviews, setReviews] = useState([]);
   const reviewListRef = useRef(null);
   const scrollInterval = useRef(null);
   const scrollTimeout = useRef(null);
+
+  const { isLoaded, isSignedIn, user } = useUser();
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     async function fetchReviews() {
@@ -40,6 +45,16 @@ export default function ReviewList({ current_user }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      getUserIdByClerkId(user.id).then(setUserId); // Fetch user ID and set it
+    }
+  }, [user]);
+  // Add a loading check
+  if (!isLoaded) {
+    return <div>Loading...</div>; // Optional: Display a loading spinner/message
+  }
+
   function handleMouseEnter() {
     clearInterval(scrollInterval.current);
     clearTimeout(scrollTimeout.current);
@@ -61,7 +76,7 @@ export default function ReviewList({ current_user }) {
     );
   }
 
-  if (reviews.length === 0) {
+  if (!reviews || reviews.length === 0) {
     return <p>No reviews available</p>;
   }
 
@@ -76,7 +91,7 @@ export default function ReviewList({ current_user }) {
         <ReviewCard
           key={review.review_id}
           review={review}
-          current_user={current_user}
+          current_user={userId}
           onDelete={() => handleDeleteReview(review.review_id)}
         />
       ))}

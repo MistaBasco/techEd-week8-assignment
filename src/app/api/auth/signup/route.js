@@ -1,36 +1,37 @@
+import { currentUser } from "@clerk/nextjs";
 import connect from "@/utilities/connect";
-import bcrypt from "bcrypt";
 
 export async function POST(req) {
-  const { username, email, password } = await req.json();
   const db = connect();
 
   try {
-    const userCheck = await db.query(
-      "SELECT * FROM appusers WHERE username = $1 OR email = $2",
-      [username, email]
+    const user = await currentUser(); // Get the current Clerk user
+
+    // Check if the user already exists in the database
+    const existingUser = await db.query(
+      "SELECT * FROM appusers WHERE clerk_user_id = $1",
+      [user.id]
     );
-    if (userCheck.rows.length > 0) {
+
+    if (existingUser.rows.length === 0) {
+      // If the user doesn't exist, insert the new user in the database
+      const result = await db.query(
+        "INSERT INTO appusers (username, email, clerk_user_id) VALUES ($1, $2, $3) RETURNING *",
+        [user.username, user.primaryEmailAddress.emailAddress, user.id]
+      );
+
       return new Response(
-        JSON.stringify({ error: "Username or email already exists" }),
-        { status: 400 }
+        JSON.stringify({ success: true, user: result.rows[0] }),
+        { status: 200 }
       );
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const result = await db.query(
-      "INSERT INTO appusers (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *",
-      [username, email, hashedPassword]
-    );
-
     return new Response(
-      JSON.stringify({
-        success: "User registered successfully",
-        user: { id: result.rows[0].user_id, username: result.rows[0].username },
-      }),
-      { status: 201 }
+      JSON.stringify({ success: true, user: existingUser.rows[0] }),
+      { status: 200 }
     );
   } catch (error) {
+    console.error("Error during signup:", error);
     return new Response(JSON.stringify({ error: "Failed to register user" }), {
       status: 500,
     });

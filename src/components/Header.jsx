@@ -18,13 +18,13 @@ export default function Header({ current_user, setCurrentUser }) {
   return (
     <>
       <div className={styles.Header}>
-        <NavBar current_user={current_user} />
-        {!current_user && <LoginForm setCurrentUser={setCurrentUser} />}
+        <NavBar />
+        {/* {!current_user && <LoginForm setCurrentUser={setCurrentUser} />}
         {current_user && (
           <>
             <h1>Logged in!</h1> <button onClick={handleLogout}>Logout</button>
           </>
-        )}
+        )} */}
       </div>
     </>
   );

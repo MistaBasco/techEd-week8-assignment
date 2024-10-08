@@ -30,8 +30,6 @@ export default async function Home() {
 
   const animeList = result.rows;
 
-  const current_user = 1;
-
   return (
     <>
       <div className={`${styles.page} ${styles.HomePage}`}>
@@ -39,7 +37,7 @@ export default async function Home() {
           <h1>Anime Collection</h1>
           <AnimeList animeList={animeList} />
         </div>
-        <SideBar current_user={current_user} />
+        <SideBar />
       </div>
     </>
   );

@@ -1,12 +1,12 @@
 import connect from "@/utilities/connect";
+import { auth } from "@clerk/nextjs/server";
 
 export async function GET(req, { params }) {
   const { reviewId } = params; // Extract dynamic route param
-  const { searchParams } = new URL(req.url); // Extract query parameters from the request URL
-  const current_user = searchParams.get("current_user"); // Get current_user from query parameters
+  const { userId: clerkId } = auth();
 
-  if (!current_user) {
-    return new Response(JSON.stringify({ error: "User not provided" }), {
+  if (!clerkId) {
+    return new Response(JSON.stringify({ error: "User not authenticated" }), {
       status: 400,
     });
   }
@@ -14,9 +14,22 @@ export async function GET(req, { params }) {
   const db = connect();
 
   try {
+    const userResult = await db.query(
+      `SELECT user_id FROM appusers WHERE clerk_id = $1`,
+      [clerkId]
+    );
+
+    if (userResult.rows.length === 0) {
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 404,
+      });
+    }
+
+    const userId = userResult.rows[0].user_id;
+
     const result = await db.query(
       `SELECT * FROM likes WHERE user_id = $1 AND review_id = $2`,
-      [current_user, reviewId]
+      [userId, reviewId]
     );
 
     if (result.rows.length > 0) {
