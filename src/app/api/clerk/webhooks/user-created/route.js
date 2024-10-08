@@ -2,11 +2,8 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import connect from "@/utilities/connect";
 
-export const config = {
-  api: {
-    bodyParser: false, // Disable bodyParser to handle raw payloads
-  },
-};
+export const runtime = "nodejs"; // or 'edge' depending on your needs
+export const preferredRegion = "auto";
 
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
