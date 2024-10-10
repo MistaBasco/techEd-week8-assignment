@@ -30,7 +30,7 @@ export default function AnimeList({ animeList }) {
 
   return (
     <>
-      <div className={styles.AnimeList}>
+      <div ref={mainContentRef} className={styles.AnimeList}>
         {animeList.map((anime) => (
           <AnimeCard key={anime.anime_id} anime={anime} />
         ))}
