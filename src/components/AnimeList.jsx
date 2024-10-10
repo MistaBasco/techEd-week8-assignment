@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+"use client";
+import { useEffect, useRef } from "react";
 import AnimeCard from "@/components/AnimeCard";
 import styles from "@/components/AnimeList.module.css";
 
