@@ -1,4 +1,5 @@
 import ReviewCard from "@/components/ReviewCard";
+import FollowButton from "@/components/FollowButton";
 import styles1 from "@/app/user/[id]/UserDetailsPage.module.css";
 import styles2 from "@/app/page.module.css";
 import { auth } from "@clerk/nextjs/server";
@@ -26,6 +27,10 @@ export default async function UserDetailsPage({ params }) {
 
     const { user, reviews } = data;
     // console.log(data);
+    let same_user;
+    if (parseInt(id) === parseInt(current_user)) {
+      same_user = true;
+    } else same_user = false;
 
     return (
       <div className={`${styles2.page} ${styles1.UserDetailsPage}`}>
@@ -38,6 +43,9 @@ export default async function UserDetailsPage({ params }) {
             <strong>Member since:</strong>
             {new Date(user.created_at).toLocaleDateString()}
           </p>
+          {!same_user && (
+            <FollowButton current_user={current_user} user_id={id} />
+          )}
         </div>
 
         <div className={styles1.ReviewContainer}>

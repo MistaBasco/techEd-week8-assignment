@@ -22,14 +22,14 @@ const seedDatabase = async () => {
 
     // Create Users table
     await db.query(`
-      CREATE TABLE appusers (
-        user_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        username VARCHAR(50) NOT NULL UNIQUE,
-        email VARCHAR(100) NOT NULL UNIQUE,
-        password_hash VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `);
+        CREATE TABLE appusers (
+          user_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+          username VARCHAR(50) NOT NULL UNIQUE,
+          email VARCHAR(100) NOT NULL UNIQUE,
+          clerk_id VARCHAR(255) NOT NULL,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `);
 
     // Create Genres table
     await db.query(`
@@ -90,6 +90,15 @@ const seedDatabase = async () => {
       );
     `);
 
+    await pool.query(`
+        CREATE TABLE follows (
+          follower_id UUID REFERENCES appusers(user_id) ON DELETE CASCADE,
+          followed_id UUID REFERENCES appusers(user_id) ON DELETE CASCADE,
+          followed_at TIMESTAMP DEFAULT NOW(),
+          PRIMARY KEY (follower_id, followed_id)
+        );
+      `);
+
     // Insert seed data into Genres table
     await db.query(`
       INSERT INTO genres (name) VALUES
@@ -102,18 +111,18 @@ const seedDatabase = async () => {
 
     // Insert seed data into Users table (10 users)
     await db.query(`
-      INSERT INTO appusers (username, email, password_hash) VALUES
-      ('animefan01', 'animefan01@example.com', 'hashedpassword1'),
-      ('otaku42', 'otaku42@example.com', 'hashedpassword2'),
-      ('weebmaster', 'weebmaster@example.com', 'hashedpassword3'),
-      ('shinobi_killer', 'shinobikiller@example.com', 'hashedpassword4'),
-      ('samuraijack', 'samuraijack@example.com', 'hashedpassword5'),
-      ('chihiro2020', 'chihiro2020@example.com', 'hashedpassword6'),
-      ('gokublack', 'gokublack@example.com', 'hashedpassword7'),
-      ('astro_boy', 'astroboy@example.com', 'hashedpassword8'),
-      ('akira_fan', 'akira_fan@example.com', 'hashedpassword9'),
-      ('otaku_no_sensei', 'otaku_no_sensei@example.com', 'hashedpassword10');
-    `);
+        INSERT INTO appusers (username, email, clerk_id) VALUES
+        ('animefan01', 'animefan01@example.com', CONCAT('test_clerk_id_', gen_random_uuid())),
+        ('otaku42', 'otaku42@example.com', CONCAT('test_clerk_id_', gen_random_uuid())),
+        ('weebmaster', 'weebmaster@example.com', CONCAT('test_clerk_id_', gen_random_uuid())),
+        ('shinobi_killer', 'shinobikiller@example.com', CONCAT('test_clerk_id_', gen_random_uuid())),
+        ('samuraijack', 'samuraijack@example.com', CONCAT('test_clerk_id_', gen_random_uuid())),
+        ('chihiro2020', 'chihiro2020@example.com', CONCAT('test_clerk_id_', gen_random_uuid())),
+        ('gokublack', 'gokublack@example.com', CONCAT('test_clerk_id_', gen_random_uuid())),
+        ('astro_boy', 'astroboy@example.com', CONCAT('test_clerk_id_', gen_random_uuid())),
+        ('akira_fan', 'akira_fan@example.com', CONCAT('test_clerk_id_', gen_random_uuid())),
+        ('otaku_no_sensei', 'otaku_no_sensei@example.com', CONCAT('test_clerk_id_', gen_random_uuid()));
+      `);
 
     // Insert seed data into Anime table (20 anime)
     await db.query(`
