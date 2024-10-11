@@ -7,11 +7,18 @@ import { getUserIdByClerkId } from "@/utilities/getUserByClerkId";
 
 export default async function UserDetailsPage({ params }) {
   const { id } = params;
+  let userId;
 
   try {
     const { userId: clerkId } = auth();
 
-    const current_user = await getUserIdByClerkId(clerkId);
+    if (clerkId) {
+      // Convert Clerk ID to local user ID
+      userId = await getUserIdByClerkId(clerkId);
+      if (!userId) {
+        return <h2>User not found</h2>;
+      }
+    }
 
     // Fetch the user details and reviews from the API route
     const response = await fetch(
@@ -24,13 +31,23 @@ export default async function UserDetailsPage({ params }) {
     }
 
     const data = await response.json();
-
     const { user, reviews } = data;
+
     // console.log(data);
-    let same_user;
-    if (parseInt(id) === parseInt(current_user)) {
-      same_user = true;
-    } else same_user = false;
+    const same_user = parseInt(id) === parseInt(userId);
+
+    let feedReviews = [];
+    if (same_user) {
+      const feedResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${id}/feed`
+      );
+
+      if (feedResponse.ok) {
+        feedReviews = await feedResponse.json();
+      } else {
+        console.error("Failed to fetch user feed:", feedResponse.statusText);
+      }
+    }
 
     return (
       <div className={`${styles2.page} ${styles1.UserDetailsPage}`}>
@@ -43,27 +60,48 @@ export default async function UserDetailsPage({ params }) {
             <strong>Member since:</strong>
             {new Date(user.created_at).toLocaleDateString()}
           </p>
-          {!same_user && (
-            <FollowButton current_user={current_user} user_id={id} />
+          {userId && !same_user && (
+            <FollowButton current_user={userId} user_id={id} />
           )}
         </div>
 
-        <div className={styles1.ReviewContainer}>
-          <h1>Reviews by {user.username}</h1>
-          <div className={styles1.Reviews}>
-            {reviews.length === 0 ? (
-              <p>No reviews yet.</p>
-            ) : (
-              reviews.map((review) => (
-                <ReviewCard
-                  key={review.review_id}
-                  review={review}
-                  current_user={current_user}
-                />
-              ))
-            )}
+        {same_user && (
+          <div className={styles1.FeedContainer}>
+            <h1 className={styles1.FixedFeedLabel}>Your Feed</h1>
+            <div className={styles1.Reviews}>
+              {feedReviews.length === 0 ? (
+                <p>No reviews in your feed yet.</p>
+              ) : (
+                feedReviews.map((review) => (
+                  <ReviewCard
+                    key={review.review_id}
+                    review={review}
+                    current_user={userId}
+                  />
+                ))
+              )}
+            </div>
           </div>
-        </div>
+        )}
+
+        {!same_user && (
+          <div className={styles1.ReviewContainer}>
+            <h1>Reviews by {user.username}</h1>
+            <div className={styles1.Reviews}>
+              {reviews.length === 0 ? (
+                <p>No reviews yet.</p>
+              ) : (
+                reviews.map((review) => (
+                  <ReviewCard
+                    key={review.review_id}
+                    review={review}
+                    current_user={userId}
+                  />
+                ))
+              )}
+            </div>
+          </div>
+        )}
       </div>
     );
   } catch (error) {

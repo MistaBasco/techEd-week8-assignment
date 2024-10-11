@@ -50,14 +50,14 @@ export default function ReviewCard({ review, current_user, onDelete }) {
     fetchLikeStatus();
   }, [review_id, current_user]);
 
-  const handleLike = () => {
+  function handleLike() {
     if (liked) {
       setCurrentLikes(currentLikes - 1);
     } else {
       setCurrentLikes(currentLikes + 1);
     }
     setLiked(!liked);
-  };
+  }
 
   return (
     <div className={styles1.ReviewCard}>

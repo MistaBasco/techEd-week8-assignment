@@ -24,10 +24,11 @@ export default function Header() {
     <>
       <div className={styles1.Header}>
         <NavBar />
-
-        <h1>
-          Welcome <Link href={`/user/${userId}`}>{user.username}</Link>{" "}
-        </h1>
+        {isSignedIn && (
+          <h1>
+            Welcome <Link href={`/user/${userId}`}>{user.username}</Link>
+          </h1>
+        )}
       </div>
     </>
   );

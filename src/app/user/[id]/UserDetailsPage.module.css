@@ -54,7 +54,8 @@
   cursor: pointer;
 }
 
-.ReviewContainer {
+.ReviewContainer,
+.FeedContainer {
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -68,6 +69,11 @@
 .ReviewContainer h1 {
   margin-bottom: 3svh;
   text-align: center;
+}
+.FixedFeedLabel {
+  position: sticky;
+  top: 0;
+  background-color: rgb(83, 77, 61);
 }
 
 .Reviews {
