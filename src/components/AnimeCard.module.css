@@ -9,12 +9,16 @@
   /* margin-top: -1svh; */
 }
 
-.AnimeCard .AnimeCover {
-  height: 30svh;
-  background-color: cadetblue;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.imageContainer {
+  width: auto; /* Set the desired size using svw */
+  height: 40svh; /* Set the desired size using svh */
+  overflow: hidden; /* Ensure the container bounds the image size */
+}
+
+.AnimeCover {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensures the image fits within its container */
 }
 
 .AnimeCard .AnimeCover h1 {

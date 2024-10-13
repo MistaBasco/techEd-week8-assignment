@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles1 from "@/components/AnimeCard.module.css";
 import styles2 from "@/app/page.module.css";
 
@@ -13,6 +14,7 @@ export default function AnimeCard({ anime }) {
     tag_ids,
     tag_names,
     average_rating,
+    cover_image,
   } = anime;
 
   return (
@@ -21,8 +23,14 @@ export default function AnimeCard({ anime }) {
         <h1 className={styles1.AnimeTitle}>{title}</h1>
       </Link>
       {/* Placeholder for the image */}
-      <div className={styles1.AnimeCover}>
-        <h1>This is definitely an image!</h1>
+      <div className={styles1.imageContainer}>
+        <Image
+          className={styles1.AnimeCover}
+          src={cover_image}
+          alt={title}
+          width={1408} // Placeholder aspect ratio width
+          height={1140} // Placeholder aspect ratio height
+        />
       </div>
       <p className={styles2.spacer}>{synopsis}</p>
       <p className={styles2.spacer}>
