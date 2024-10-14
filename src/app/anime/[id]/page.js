@@ -11,7 +11,9 @@ export default async function AnimeDetailPage({ params }) {
   try {
     // Fetch the anime details from your API route
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const response = await fetch(`${baseUrl}/api/anime/${id}`);
+    const response = await fetch(
+      `${baseUrl}/api/anime/${id}?cache_buster=timestamp`
+    );
 
     if (!response.ok) {
       console.error("Failed to fetch anime details:", response.statusText);

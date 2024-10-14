@@ -22,15 +22,16 @@ export default function AnimeCard({ anime }) {
       <Link className={styles1.Link} href={`/anime/${anime_id}`}>
         <h1 className={styles1.AnimeTitle}>{title}</h1>
       </Link>
-      {/* Placeholder for the image */}
       <div className={styles1.imageContainer}>
-        <Image
-          className={styles1.AnimeCover}
-          src={cover_image}
-          alt={title}
-          width={1408} // Placeholder aspect ratio width
-          height={1140} // Placeholder aspect ratio height
-        />
+        <Link href={`/anime/${anime_id}`}>
+          <Image
+            className={styles1.AnimeCover}
+            src={cover_image}
+            alt={title}
+            width={1408} // Placeholder aspect ratio width
+            height={1140} // Placeholder aspect ratio height
+          />
+        </Link>
       </div>
       <p className={styles2.spacer}>{synopsis}</p>
       <p className={styles2.spacer}>

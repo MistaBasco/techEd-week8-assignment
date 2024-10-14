@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import Link from "next/link";
+import Image from "next/image";
 import { getUserIdByClerkId } from "@/utilities/getUserByClerkId";
 import ReviewCard from "@/components/ReviewCard";
 import styles1 from "@/components/AnimeDetailClient.module.css";
@@ -9,6 +11,7 @@ import styles2 from "@/app/page.module.css";
 export default function AnimeDetailClient({ anime, reviews, tags }) {
   const { isLoaded, isSignedIn, user } = useUser();
   const [userId, setUserId] = useState(null);
+  console.log(anime.cover_image);
 
   useEffect(() => {
     if (user) {
@@ -24,9 +27,16 @@ export default function AnimeDetailClient({ anime, reviews, tags }) {
     <div className={`${styles2.page} ${styles1.AnimeDetailPage}`}>
       <div className={styles1.AnimeContainer}>
         <h1 className={styles1.AnimeTitle}>{anime.title}</h1>
-        {/* <img src={anime.cover_image} alt={anime.title} /> */}
-        <div className={styles1.AnimeCover}>
-          <h1>This is definitely an image!</h1>
+        <div className={styles1.imageContainer}>
+          <Link href={`/anime/${anime.anime_id}`}>
+            <Image
+              className={styles1.AnimeCover}
+              src={anime.cover_image}
+              alt={anime.title}
+              width={1408} // Placeholder aspect ratio width
+              height={1140} // Placeholder aspect ratio height
+            />
+          </Link>
         </div>
         <p className={styles2.spacer}>{anime.synopsis}</p>
         <p className={styles2.spacer}>
