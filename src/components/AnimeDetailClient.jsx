@@ -35,6 +35,7 @@ export default function AnimeDetailClient({ anime, reviews, tags }) {
               alt={anime.title}
               width={1408} // Placeholder aspect ratio width
               height={1140} // Placeholder aspect ratio height
+              priority
             />
           </Link>
         </div>

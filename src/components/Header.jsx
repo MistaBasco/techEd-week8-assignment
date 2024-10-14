@@ -1,10 +1,9 @@
 "use client";
-import NavBar from "./NavBar";
-import styles1 from "@/components/Header.module.css";
-import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { getUserIdByClerkId } from "@/utilities/getUserByClerkId";
 import { useState, useEffect } from "react";
+import NavBar from "./NavBar";
+import { Flex, Heading, Link, Box } from "@chakra-ui/react";
 
 export default function Header() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -17,19 +16,31 @@ export default function Header() {
   }, [user]);
 
   if (!isLoaded) {
-    return <div>Loading...</div>; // Loading state until Clerk is loaded
+    return <Box>Loading...</Box>; // Loading state until Clerk is loaded
   }
 
   return (
-    <>
-      <div className={styles1.Header}>
-        <NavBar />
-        {isSignedIn && (
-          <h1>
-            Welcome <Link href={`/user/${userId}`}>{user.username}</Link>
-          </h1>
-        )}
-      </div>
-    </>
+    <Flex
+      width="100%"
+      height="15%"
+      alignItems="flex-end"
+      justifyContent="space-between"
+      bg="gray.800"
+    >
+      <NavBar />
+
+      {isSignedIn && userId && (
+        <Heading as="h1" size="lg" color="gray.200">
+          Welcome&nbsp;
+          <Link
+            href={`/user/${userId}`}
+            color="gray.100"
+            _hover={{ textDecoration: "underline" }}
+          >
+            {user.username}
+          </Link>
+        </Heading>
+      )}
+    </Flex>
   );
 }

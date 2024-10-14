@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 
 export default function DeleteButton({ reviewId, current_user, onDelete }) {
   const [deleted, setDeleted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`/api/review/${reviewId}`, {
         method: "DELETE",
@@ -28,5 +31,14 @@ export default function DeleteButton({ reviewId, current_user, onDelete }) {
     return <p>This review has been deleted.</p>;
   }
 
-  return <button onClick={handleDelete}>Delete</button>;
+  return (
+    <Button
+      onClick={handleDelete}
+      isLoading={loading}
+      loadingText="Deleting..."
+      colorScheme="red"
+    >
+      Delete
+    </Button>
+  );
 }

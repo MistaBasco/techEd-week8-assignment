@@ -34,7 +34,6 @@ export default async function Home() {
     <>
       <div className={`${styles.page} ${styles.HomePage}`}>
         <div className={styles.MainContent}>
-          <h1>Anime Collection</h1>
           <AnimeList animeList={animeList} />
         </div>
         <SideBar />

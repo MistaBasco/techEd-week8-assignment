@@ -11,7 +11,6 @@
 
 .imageContainer {
   width: auto; /* Set the desired size using svw */
-  height: 40svh; /* Set the desired size using svh */
   overflow: hidden; /* Ensure the container bounds the image size */
 }
 

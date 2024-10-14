@@ -1,15 +1,31 @@
-import styles1 from "@/components/Footer.module.css";
-import styles2 from "@/app/page.module.css";
+import { Box, Heading, Text } from "@chakra-ui/react";
+
 export default function Footer() {
   return (
-    <>
-      <div className={`${styles1.Footer} ${styles2.glow}`}>
-        <h1>
-          Basco<span className={styles2.copyright}>™</span> Made
-          <span className={styles2.copyright}>®</span> This
-          <span className={styles2.copyright}>©</span>
-        </h1>
-      </div>
-    </>
+    <Box
+      as="footer"
+      height="5svh"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      textShadow="1px 1px 6px slategrey"
+      bg="gray.800"
+      color="white"
+    >
+      <Heading as="h1" size="md">
+        Basco
+        <Text as="span" verticalAlign="text-top" fontSize="0.5em" ml="0.2vw">
+          ™
+        </Text>{" "}
+        Made
+        <Text as="span" verticalAlign="text-top" fontSize="0.5em" ml="0.2vw">
+          ®
+        </Text>{" "}
+        This
+        <Text as="span" verticalAlign="text-top" fontSize="0.5em" ml="0.2vw">
+          ©
+        </Text>
+      </Heading>
+    </Box>
   );
 }

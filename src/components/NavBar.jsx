@@ -4,6 +4,7 @@ import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import { getUserIdByClerkId } from "@/utilities/getUserByClerkId";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { Flex, Box, Button } from "@chakra-ui/react";
 
 export default function NavBar() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -21,30 +22,102 @@ export default function NavBar() {
   console.log("userId", userId);
 
   return (
-    <div className={styles.NavBar}>
-      <Link className={styles.Link} href={"/"}>
-        Home
+    <Flex
+      as="nav"
+      bg="gray.700"
+      p={4}
+      gap="0.3vw"
+      alignItems="center"
+      width="fit-content"
+      height="50%"
+    >
+      <Link href="/" passHref>
+        <Button
+          textAlign="center"
+          p={4}
+          bg="gray.500"
+          textDecoration="none"
+          fontSize="2xl"
+          fontWeight="bold"
+          color="rgb(0, 13, 6)"
+          textShadow="1px 2px 2px rgba(26, 214, 155, 0.87)"
+          _hover={{ bg: "rgb(98, 118, 112)" }}
+        >
+          Home
+        </Button>
       </Link>
+
       <SignedIn>
         {userId && (
-          <Link className={styles.Link} href={`/user/${userId}`}>
-            Profile
+          <Link href={`/user/${userId}`} passHref>
+            <Button
+              textAlign="center"
+              p={4}
+              bg="gray.500"
+              textDecoration="none"
+              fontSize="2xl"
+              fontWeight="bold"
+              color="rgb(0, 13, 6)"
+              textShadow="1px 2px 2px rgba(26, 214, 155, 0.87)"
+              _hover={{ bg: "rgb(98, 118, 112)" }}
+            >
+              Profile
+            </Button>
           </Link>
         )}
-        <Link className={styles.Link} href="/review/create-review">
-          Post Review
+
+        <Link href="/review/create-review" passHref>
+          <Button
+            textAlign="center"
+            p={4}
+            bg="gray.500"
+            textDecoration="none"
+            fontSize="2xl"
+            fontWeight="bold"
+            color="rgb(0, 13, 6)"
+            textShadow="1px 2px 2px rgba(26, 214, 155, 0.87)"
+            _hover={{ bg: "rgb(98, 118, 112)" }}
+          >
+            Post Review
+          </Button>
         </Link>
-        {/* The Clerk UserButton allows users to access their account and sign out */}
+
         <UserButton afterSignOutUrl="/" />
       </SignedIn>
+
       <SignedOut>
-        <Link className={styles.Link} href="/auth/signup">
-          Sign Up
+        <Link href="/auth/signup" passHref>
+          <Button
+            textAlign="center"
+            p={4}
+            bg="gray.500"
+            textDecoration="none"
+            fontSize="2xl"
+            fontWeight="bold"
+            color="rgb(0, 13, 6)"
+            textShadow="1px 2px 2px rgba(26, 214, 155, 0.87)"
+            _hover={{ bg: "rgb(98, 118, 112)" }}
+          >
+            Sign Up
+          </Button>
         </Link>
-        <Link className={styles.Link} href="/auth/login">
-          Sign In
+
+        <Link href="/auth/login" passHref>
+          <Button
+            textAlign="center"
+            p={4}
+            bg="gray.500"
+            textDecoration="none"
+            fontSize="2xl"
+            fontWeight="bold"
+            color="rgb(0, 13, 6)"
+            textShadow="1px 2px 2px rgba(26, 214, 155, 0.87)"
+            _hover={{ bg: "rgb(98, 118, 112)" }}
+          >
+            Sign In
+          </Button>
         </Link>
       </SignedOut>
-    </div>
+    </Flex>
   );
 }

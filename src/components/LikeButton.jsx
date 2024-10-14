@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import { Button } from "@chakra-ui/react";
 
 export default function LikeButton({ reviewId, onLike, liked }) {
   const [loading, setLoading] = useState(false);
@@ -35,8 +36,18 @@ export default function LikeButton({ reviewId, onLike, liked }) {
   };
 
   return (
-    <button onClick={handleLike} disabled={loading}>
-      {loading ? "Processing..." : liked ? "Unlike" : "Like"}
-    </button>
+    // <button onClick={handleLike} disabled={loading}>
+    //   {loading ? "Processing..." : liked ? "Unlike" : "Like"}
+    // </button>
+
+    <Button
+      onClick={handleLike}
+      isLoading={loading}
+      loadingText="Processing..."
+      isDisabled={loading}
+      colorScheme={liked ? "red" : "blue"} // Change color based on like status
+    >
+      {liked ? "Unlike" : "Like"}
+    </Button>
   );
 }

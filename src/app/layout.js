@@ -1,9 +1,9 @@
 import { Exo_2 } from "next/font/google";
-import { ClerkProvider, RedirectToSignIn } from "@clerk/nextjs";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Title from "@/components/Title";
+import { Providers } from "@/components/Providers";
 
 export const metadata = {
   title: "Absolute Weeb Reviews",
@@ -17,15 +17,15 @@ const exo = Exo_2({
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
-      <html lang="en" className={exo.className}>
-        <body>
+    <html lang="en" className={exo.className}>
+      <body>
+        <Providers>
           <Title />
           <Header />
           {children}
           <Footer />
-        </body>
-      </html>
-    </ClerkProvider>
+        </Providers>
+      </body>
+    </html>
   );
 }

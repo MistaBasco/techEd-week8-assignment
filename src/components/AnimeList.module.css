@@ -5,7 +5,7 @@
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
   width: 100%;
-  padding-bottom: 4svh;
+  /* padding-bottom: 4svh; */
   /* scroll-behavior: smooth; */
 }
 

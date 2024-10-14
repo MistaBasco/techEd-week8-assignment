@@ -2,8 +2,15 @@
 import { format } from "date-fns";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import styles1 from "@/components/ReviewCard.module.css";
-import styles2 from "@/app/page.module.css";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Heading,
+  Text,
+  Flex,
+} from "@chakra-ui/react";
 import LikeButton from "@/components/LikeButton";
 import DeleteButton from "@/components/DeleteButton";
 
@@ -26,7 +33,7 @@ export default function ReviewCard({ review, current_user, onDelete }) {
 
   const formattedDate = format(new Date(created_at), "MMM dd, yyyy");
 
-  const isAuthor = review.user_id === current_user;
+  const isAuthor = user_id === current_user;
   //   console.log(user_id);
   useEffect(() => {
     async function fetchLikeStatus() {
@@ -60,45 +67,70 @@ export default function ReviewCard({ review, current_user, onDelete }) {
   }
 
   return (
-    <div className={styles1.ReviewCard}>
-      <Link href={`/anime/${anime_id}`}>
-        <h3>{anime_title}</h3>
-      </Link>
-      <div className={styles2.spacer}>
-        <strong>Review by:</strong>
-        <Link href={`/user/${user_id}`}>
-          <p>{reviewer_name}</p>
+    <Card bg="gray.700" color="white" borderRadius="md" shadow="md" p={1}>
+      <CardHeader p={2} pl={4}>
+        <Link href={`/anime/${anime_id}`}>
+          <Heading as="h3" size="md" _hover={{ textDecoration: "underline" }}>
+            {anime_title}
+          </Heading>
         </Link>
-      </div>
+      </CardHeader>
 
-      <p className={styles2.spacer}>
-        <strong>Rating:</strong> {rating}/10
-      </p>
+      <CardBody pl={4}>
+        <Flex alignItems="center" mb={2}>
+          <Text fontWeight="bold" mr={1}>
+            Review by:
+          </Text>
+          <Link href={`/user/${user_id}`}>
+            <Text _hover={{ textDecoration: "underline" }}>
+              {reviewer_name}
+            </Text>
+          </Link>
+        </Flex>
 
-      <p className={styles2.spacer}>{review_text}</p>
+        <Text mb={2}>
+          <Text as="span" fontWeight="bold">
+            Rating:&nbsp;
+          </Text>
+          {rating}/10
+        </Text>
 
-      <p className={styles2.spacer}>
-        <strong>Likes:</strong> {currentLikes}
-      </p>
+        <Text mb={2}>{review_text}</Text>
 
-      <p className={styles2.spacer}>
-        <strong>Date:</strong> {formattedDate}
-      </p>
-      {current_user && !loading && (
-        <LikeButton
-          reviewId={review_id}
-          current_user={current_user}
-          onLike={handleLike}
-          liked={liked}
-        />
-      )}
-      {isAuthor && current_user && (
-        <DeleteButton
-          reviewId={review.review_id}
-          current_user={current_user}
-          onDelete={onDelete}
-        />
-      )}
-    </div>
+        <Text mb={2}>
+          <Text as="span" fontWeight="bold">
+            Likes:&nbsp;
+          </Text>
+          {currentLikes}
+        </Text>
+
+        <Text mb={2}>
+          <Text as="span" fontWeight="bold">
+            Date:&nbsp;
+          </Text>
+          {formattedDate}
+        </Text>
+      </CardBody>
+
+      <CardFooter p={1} pl={4}>
+        <Flex gap={4} alignItems="center">
+          {current_user && !loading && (
+            <LikeButton
+              reviewId={review_id}
+              current_user={current_user}
+              onLike={handleLike}
+              liked={liked}
+            />
+          )}
+          {isAuthor && current_user && (
+            <DeleteButton
+              reviewId={review_id}
+              current_user={current_user}
+              onDelete={onDelete}
+            />
+          )}
+        </Flex>
+      </CardFooter>
+    </Card>
   );
 }
