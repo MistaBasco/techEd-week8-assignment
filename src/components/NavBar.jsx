@@ -1,13 +1,13 @@
 "use client";
-import styles from "@/components/NavBar.module.css";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import { getUserIdByClerkId } from "@/utilities/getUserByClerkId";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Flex, Box, Button } from "@chakra-ui/react";
+import { Flex, Button } from "@chakra-ui/react";
 
 export default function NavBar() {
   const { isLoaded, isSignedIn, user } = useUser();
+
   const [userId, setUserId] = useState(null);
   useEffect(() => {
     if (user) {

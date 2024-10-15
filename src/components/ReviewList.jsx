@@ -4,6 +4,7 @@ import styles from "@/components/ReviewList.module.css";
 import ReviewCard from "@/components/ReviewCard";
 import { useUser } from "@clerk/nextjs";
 import { getUserIdByClerkId } from "@/utilities/getUserByClerkId";
+import { Skeleton } from "@chakra-ui/react";
 
 export default function ReviewList() {
   const [reviews, setReviews] = useState([]);
@@ -52,7 +53,14 @@ export default function ReviewList() {
   }, [user]);
   // Add a loading check
   if (!isLoaded) {
-    return <div>Loading...</div>; // Optional: Display a loading spinner/message
+    return (
+      <Skeleton
+        w="100%"
+        h="100%"
+        startColor="gray.500"
+        endColor="gray.900"
+      ></Skeleton>
+    ); // Optional: Display a loading spinner/message
   }
 
   function handleMouseEnter() {

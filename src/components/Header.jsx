@@ -3,7 +3,7 @@ import { useUser } from "@clerk/nextjs";
 import { getUserIdByClerkId } from "@/utilities/getUserByClerkId";
 import { useState, useEffect } from "react";
 import NavBar from "./NavBar";
-import { Flex, Heading, Link, Box } from "@chakra-ui/react";
+import { Flex, Heading, Link, Skeleton } from "@chakra-ui/react";
 
 export default function Header() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -16,7 +16,16 @@ export default function Header() {
   }, [user]);
 
   if (!isLoaded) {
-    return <Box>Loading...</Box>; // Loading state until Clerk is loaded
+    return (
+      <Skeleton
+        width="100%"
+        height="15%"
+        startColor="gray.500"
+        endColor="gray.900"
+      >
+        Loading...
+      </Skeleton>
+    ); // Loading state until Clerk is loaded
   }
 
   return (
