@@ -163,7 +163,7 @@ const seedDatabase = async () => {
       (12, 2), (13, 1), (14, 4), (15, 3), (16, 8), (17, 1), (17, 7), (18, 3), (19, 1), (19, 7), (20, 1);
     `);
 
-    // Insert seed data into Reviews table (50 reviews, mixing short and long)
+    // Insert seed data into Reviews table (15 reviews, mixing short and long)
     await db.query(`INSERT INTO reviews (anime_id, user_id, rating, review_text, likes) VALUES
     (1, 1, 9, 'Amazing plot and action scenes! It keeps you on the edge of your seat.', 0),
     (1, 2, 8, 'Great anime, though it can be a bit too intense at times.', 0),
